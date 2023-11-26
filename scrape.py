@@ -32,25 +32,55 @@ if response.status_code == 200:
                     position = "FOR"
                 if "Goalkeeper" in specific_position or "goalkeeper" in specific_position:
                     position = "G"
-                new_position = specific_position.split(" - ")
-                specific_position = new_position[-1]
+                
                 
             ### Club ###
             if i.text.strip() == "Current club:":
+              #  print(spans[index+1])
+                club_picture = spans[index+1].find('img')
+                club_picture_2 = club_picture.get('srcset')
+                club_picture_3 = club_picture_2.split(" ")[0].replace("small", "normquad")
+                
                 club = spans[index+1].text.strip()
                 
-            ### Nationality ###
+            ### Nationality_Pic ###
             if i.text.strip() == "Citizenship:":
-                nationality = spans[index+1].text.strip()
+                countryimg = spans[index+1].find('img')
+                countryimg_2 = countryimg.get('src')
+                countryimg_3 = countryimg_2.split(" ")[0].replace("tiny", "medium")
+                
+                
+                
+            ### Age ###
+            if i.text.strip() == "Age:":
+                age = spans[index+1].text.strip()
+                
+        ### League ###
+        league = soup.find("a", class_="data-header__league-link")
+        img_tag = league.find('img')
+        src_value = img_tag.get('src')
+        league_picture_1 = img_tag.get('src')
+        league_picture_2 = league_picture_1.replace('verytiny', 'header')
         
-        print(nationality)
+        
+        
+        
+        
+        market_value = soup.find("div", class_="tm-player-market-value-development__max-value")
+        print(market_value)
+        
+        
+        
+        print("POS:", position)
+        print("SPECIFIC_POS:", specific_position)
+        print("CLUB:", club)
+        print("CLUB_PIC:", club_picture_3)
     
-    
-    ### Position ###
-   # position_label = soup.find(lambda tag: tag.name == 'li' and 'Position:' in tag.text if tag.name == 'li' else False)
-   # position_content = position_label.find_next('span', class_='data-header__content')
-   # specific_position = position_content.text.strip()
-   # positions = []
+        print("COUNTRY_IMG:", countryimg_3)
+        print("AGE:", age)
+        print("LEAGUE:", league.text.strip())
+        print("LEAGUE PICTURE:", league_picture_2)
+   
     
     
 else:
